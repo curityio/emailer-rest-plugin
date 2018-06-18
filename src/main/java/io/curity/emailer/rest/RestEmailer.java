@@ -27,16 +27,16 @@ import se.curity.identityserver.sdk.http.HttpResponse;
 import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.WebServiceClient;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Map;
 
-import static io.curity.emailer.rest.config.RestEmailProviderConfiguration.HttpMethod.POST;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The RestEmailer is an example implementation of an EmailProvider plugin, that uses a configured
- * REST service to send use the email model to send an email message to a recipient email address.
+ * REST service to deliver the email message model and the recipient to.
  * <p>
- * It is not adviced to use this plugin in a production environment.
+ * It is not advised to use this plugin in a production environment.
  * </p>
  */
 public class RestEmailer implements Emailer
@@ -46,7 +46,6 @@ public class RestEmailer implements Emailer
     private final Json _json;
     private final WebServiceClient _webServiceClient;
 
-    private final RestEmailProviderConfiguration.HttpMethod _httpMethod;
     private final String _path;
 
     public RestEmailer(RestEmailProviderConfiguration configuration)
@@ -54,7 +53,6 @@ public class RestEmailer implements Emailer
         _json = configuration.json();
         _webServiceClient = configuration.webServiceClient();
 
-        _httpMethod = configuration.getHttpMethod();
         _path = configuration.getPath();
     }
 
@@ -64,24 +62,23 @@ public class RestEmailer implements Emailer
         Map<String, Object> model = renderableEmail.getModel();
 
         // The REST mailer is only interested in the model, and will not let the email render its contents
-        String modelAsJson = _json.toJson(model);
+        String modelAsJsonString = _json.toJson(model);
 
-        String subject = String.valueOf(
-                model.getOrDefault("_subject", "Message from Curity"));
+        HttpRequest.BodyProcessor requestBodyProcessor = HttpRequest.fromString(modelAsJsonString, UTF_8);
 
-        _logger.trace("Delivering email with subject '{}' for recipient '{}'", subject, recipient);
+        String path = Paths.get(_path, recipient).toString();
 
-        HttpRequest.BodyProcessor requestBodyProcessor = HttpRequest.fromString(modelAsJson, StandardCharsets.UTF_8);
+        _logger.trace("Delivering email with subject '{}' for recipient '{}' on path '{}'",
+                renderableEmail.getSubject(), recipient, path);
 
-        HttpRequest.Builder builder = _webServiceClient.withPath(_path)
+        HttpRequest httpRequest =_webServiceClient.withPath(path)
                 .request()
                 .contentType(ContentType.JSON.getContentType())
-                .body(requestBodyProcessor);
-
-        HttpRequest httpRequest = _httpMethod.equals(POST) ? builder.post() : builder.get();
+                .body(requestBodyProcessor)
+                .post();
 
         HttpResponse httpResponse = httpRequest.response();
 
-        _logger.info("Request to delivering email responded with statuscode {}", httpResponse.statusCode());
+        _logger.debug("Request to delivering email responded with statuscode {}", httpResponse.statusCode());
     }
 }

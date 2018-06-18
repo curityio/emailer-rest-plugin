@@ -32,17 +32,4 @@ public interface RestEmailProviderConfiguration extends Configuration
     @Description("Path that is used after the context of the host where the request is made to; defaults to '/'")
     @DefaultString("/")
     String getPath();
-
-    @Description("Specify the method by which the request is made to the REST email service; defaults to POST")
-    @DefaultEnum("POST")
-    HttpMethod getHttpMethod();
-
-    enum HttpMethod
-    {
-        @Description("GET request method")
-        GET,
-
-        @Description("POST request method")
-        POST
-    }
 }

@@ -1,10 +1,10 @@
-MongoDB Data Source Plug-in
-===========================
+REST Emailer Plug-in
+====================
 
 .. image:: https://travis-ci.org/curityio/rest-mailer.svg?branch=dev
      :target: https://travis-ci.org/curityio/rest-mailer
 
-This project provides an open source email plugin for the Curity Identity Server. It is provided as an example to show how you can create a tailor made plugin that handles email delivery by calling a REST API.
+This project provides an open source email plugin for the Curity Identity Server. It is provided purely as an example without support to show how you can create a tailor made plugin that handles email delivery by calling a REST API.
 
 System Requirements
 ~~~~~~~~~~~~~~~~~~~
@@ -47,10 +47,6 @@ Configuration using the Admin GUI
 
 Configure MongoDB
 ~~~~~~~~~~~~~~~~~
-
-Required dependencies
-~~~~~~~~~~~~~~~~~~~~~
-The following dependencies/jars must be in plugin group classpath.
 
 
 License
