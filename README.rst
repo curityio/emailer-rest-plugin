@@ -40,13 +40,10 @@ For a more detailed explanation of installing plug-ins, refer to the `Curity dev
 Configuring the REST Mailer in Curity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configuration using the Admin GUI
-"""""""""""""""""""""""""""""""""
-
-
-
-Configure MongoDB
-~~~~~~~~~~~~~~~~~
+Configuration using the Admin UI
+""""""""""""""""""""""""""""""""
+Once installed, the REST mailer becomes available as email provider. An email provider is configured as a facility. To configure an email provider, open the facilities through
+the ``Facilities``-button on the top right and look for the ``Email`` heading. When editing an Email provider, the type ``rest-mailer`` will configure the REST Emailer plugin.
 
 
 License
