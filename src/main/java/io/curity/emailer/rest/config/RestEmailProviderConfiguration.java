@@ -23,13 +23,18 @@ import se.curity.identityserver.sdk.config.annotation.Description;
 import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.WebServiceClient;
 
+import java.util.Optional;
+
 public interface RestEmailProviderConfiguration extends Configuration
 {
     WebServiceClient webServiceClient();
 
     Json json();
 
-    @Description("Path that is used after the context of the host where the request is made to; defaults to '/'")
-    @DefaultString("/")
-    String getPath();
+    @Description("An RFC822 email address that will be used as the from name when sending emails")
+    String getSender();
+
+    @Description("Optional HTTP Basic Authentication credential to use with the HTTP request, " +
+            "i.e. the value being provided as Authorization: Basic Base64Enc<HttpBasicAuthnCredential>")
+    Optional<String> getHttpBasicAuthnCredential();
 }

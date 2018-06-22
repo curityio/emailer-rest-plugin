@@ -28,7 +28,9 @@ import se.curity.identityserver.sdk.service.Json;
 import se.curity.identityserver.sdk.service.WebServiceClient;
 
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -46,14 +48,16 @@ public class RestEmailer implements Emailer
     private final Json _json;
     private final WebServiceClient _webServiceClient;
 
-    private final String _path;
+    private final String _sender;
+    private final Optional<String> _apiKey;
 
     public RestEmailer(RestEmailProviderConfiguration configuration)
     {
         _json = configuration.json();
         _webServiceClient = configuration.webServiceClient();
 
-        _path = configuration.getPath();
+        _sender = configuration.getSender();
+        _apiKey = configuration.getHttpBasicAuthnCredential();
     }
 
     @Override
@@ -66,18 +70,25 @@ public class RestEmailer implements Emailer
 
         HttpRequest.BodyProcessor requestBodyProcessor = HttpRequest.fromString(modelAsJsonString, UTF_8);
 
-        String path = Paths.get(_path, recipient).toString();
+        String path = Paths.get(_sender, recipient).toString();
 
         _logger.trace("Delivering email with subject '{}' for recipient '{}' on path '{}'",
                 renderableEmail.getSubject(), recipient, path);
 
-        HttpRequest httpRequest =_webServiceClient.withPath(path)
-                .request()
-                .contentType(ContentType.JSON.getContentType())
+        HttpRequest.Builder requestBuilder = _webServiceClient.withPath(path).request();
+
+        if (_apiKey.isPresent())
+        {
+            String encodedApiKey = Base64.getEncoder().encodeToString(
+                    _apiKey.get().getBytes(UTF_8));
+            requestBuilder = requestBuilder.header("Authorization", "Basic " + encodedApiKey);
+        }
+
+        HttpRequest request = requestBuilder.contentType(ContentType.JSON.getContentType())
                 .body(requestBodyProcessor)
                 .post();
 
-        HttpResponse httpResponse = httpRequest.response();
+        HttpResponse httpResponse = request.response();
 
         _logger.debug("Request to delivering email responded with statuscode {}", httpResponse.statusCode());
     }
