@@ -1,8 +1,11 @@
 REST Emailer Plug-in
 ====================
-
-.. image:: https://travis-ci.org/curityio/emailer-rest-plugin.svg?branch=dev
-     :target: https://travis-ci.org/curityio/emailer-rest-plugin
+  
+.. image:: https://curity.io/assets/images/badges/emailer-rest-plugin-quality.svg
+       :target: https://curity.io/resources/code-examples/status/
+       
+.. image:: https://curity.io/assets/images/badges/emailer-rest-plugin-availability.svg
+       :target: https://curity.io/resources/code-examples/status/
 
 This project provides an open source email plugin for the Curity Identity Server. It is provided purely as an example without support to show how you can create a tailor made plugin that handles email delivery by calling a REST API.
 
