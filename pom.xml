@@ -21,13 +21,13 @@
 
     <groupId>io.curity.identityserver.plugins</groupId>
     <artifactId>emailer.rest</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>REST emailer plugin for Curity</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.curityVersion>3.1.0-SNAPSHOT</project.curityVersion>
+        <project.curityVersion>5.1.0</project.curityVersion>
         <libraries.directory>${project.build.directory}/libs</libraries.directory>
     </properties>
 
@@ -94,12 +94,12 @@
     <distributionManagement>
         <repository>
             <id>customer-release-repo</id>
-            <url>https://nexus.curity.se/nexus/content/repositories/customer-release-repo</url>
+            <url>https://nexus.curityio.net/repository/customer-release-repo/</url>
         </repository>
         <snapshotRepository>
             <id>customer-snapshot-repo</id>
             <name>Customer Snapshot Repository</name>
-            <url>https://nexus.curity.se/nexus/content/repositories/customer-snapshot-repo/</url>
+            <url>https://nexus.curityio.net/repository/customer-snapshot-repo/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
