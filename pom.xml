@@ -21,7 +21,7 @@
 
     <groupId>io.curity.identityserver.plugins</groupId>
     <artifactId>emailer.rest</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>REST emailer plugin for Curity</name>
 
