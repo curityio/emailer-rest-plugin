@@ -21,13 +21,13 @@
 
     <groupId>io.curity.identityserver.plugins</groupId>
     <artifactId>emailer.rest</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>REST emailer plugin for Curity</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.curityVersion>5.1.0</project.curityVersion>
+        <project.curityVersion>11.4.0</project.curityVersion>
         <libraries.directory>${project.build.directory}/libs</libraries.directory>
     </properties>
 
@@ -38,8 +38,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.22</version>
+            <version>2.0.12</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -95,12 +95,8 @@
     <distributionManagement>
         <repository>
             <id>customer-release-repo</id>
-            <url>https://nexus.curityio.net/repository/customer-release-repo/</url>
+            <name>Customer Release Repository</name>
+            <url>https://hub.curityio.net/repository/curity-release-repo/</url>
         </repository>
-        <snapshotRepository>
-            <id>customer-snapshot-repo</id>
-            <name>Customer Snapshot Repository</name>
-            <url>https://nexus.curityio.net/repository/customer-snapshot-repo/</url>
-        </snapshotRepository>
     </distributionManagement>
 </project>
